@@ -11,7 +11,6 @@ pie chart analysis
 Lets add our partners section on the home page showing professionals(economist) involved the partner name, logo, and link to their website
 after testimonial section.
 
-
 Lets add a hero section to the home page and it should be a carousel
 carrying background images of the services with a overlay text of the service name, category, customer, operating hrs and a button to view the service
 
@@ -24,3 +23,8 @@ Lets make http://127.0.0.1:8000/services/3(service id) a more shareable customiz
 top contact information Top-Navbar
 
 
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+
+$user = User::where('email', 'provider@platform.test')->first();
+Hash::check('password', $user->password);
