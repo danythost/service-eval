@@ -23,8 +23,7 @@ Lets make http://127.0.0.1:8000/services/3(service id) a more shareable customiz
 top contact information Top-Navbar
 
 
-use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 
-$user = User::where('email', 'provider@platform.test')->first();
-Hash::check('password', $user->password);
+
+
+
