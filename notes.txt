@@ -21,9 +21,3 @@ lets remake the navigation section into a modern navigation area remove the serv
 Lets make http://127.0.0.1:8000/services/3(service id) a more shareable customize id
 
 top contact information Top-Navbar
-
-
-
-
-
-
