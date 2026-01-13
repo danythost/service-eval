@@ -167,6 +167,55 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            {{-- Top Providers Section --}}
+            @if(isset($topProviders) && $topProviders->count() > 0)
+                <div class="mb-16">
+                    <div class="flex items-center justify-between mb-8">
+                        <div>
+                            <span class="inline-block px-3 py-1 bg-blue-50 text-blue-600 rounded-lg text-[10px] font-black uppercase tracking-widest mb-2">
+                                Excellence
+                            </span>
+                            <h2 class="text-2xl font-black text-slate-900 tracking-tight">
+                                Our Top <span class="text-blue-600">Service Providers</span>
+                            </h2>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">
+                        @foreach($topProviders as $provider)
+                            <div class="group bg-white rounded-3xl p-4 border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col items-center text-center">
+                                <div class="w-16 h-16 mb-4 relative">
+                                    <div class="absolute inset-0 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl rotate-6 group-hover:rotate-12 transition-transform duration-300 opacity-20"></div>
+                                    <div class="relative w-full h-full bg-slate-50 rounded-2xl flex items-center justify-center text-blue-600 font-black text-xl border border-white shadow-inner group-hover:scale-105 transition-transform duration-300 overflow-hidden">
+                                        @if($provider->profile_picture)
+                                            <img src="{{ asset('storage/' . $provider->profile_picture) }}" alt="{{ $provider->name }}" class="w-full h-full object-cover">
+                                        @else
+                                            @php $initials = collect(explode(' ', $provider->name))->map(fn($n) => substr($n, 0, 1))->take(2)->join(''); @endphp
+                                            {{ $initials }}
+                                        @endif
+                                    </div>
+                                    <!-- Verified Badge -->
+                                    <div class="absolute -top-1 -right-1 w-5 h-5 bg-blue-600 rounded-full border-2 border-white flex items-center justify-center text-white shadow-sm">
+                                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <h3 class="text-sm font-black text-slate-900 mb-1 line-clamp-1 group-hover:text-blue-600 transition-colors">
+                                    {{ $provider->name }}
+                                </h3>
+                                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-4">
+                                    {{ $provider->services_count }} Services
+                                </p>
+                                <a href="#" class="mt-auto w-full py-2 bg-slate-50 text-slate-600 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-blue-600 hover:text-white transition-all">
+                                    Profile
+                                </a>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
+
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 @forelse($services as $service)
                     <div class="bg-white rounded-lg shadow border border-gray-100 overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-200 flex flex-col h-full">
@@ -223,6 +272,140 @@
                 {{ $services->links() }}
             </div>
 
+            {{-- Our Story Section --}}
+            <div class="mt-32 mb-24 overflow-hidden">
+                <div class="bg-gradient-to-br from-slate-900 to-indigo-950 rounded-[3rem] p-8 md:p-16 relative overflow-hidden">
+                    <!-- Decorative background elements -->
+                    <div class="absolute top-0 right-0 w-96 h-96 bg-blue-600/10 blur-[120px] rounded-full -mr-48 -mt-48"></div>
+                    <div class="absolute bottom-0 left-0 w-96 h-96 bg-indigo-600/10 blur-[120px] rounded-full -ml-48 -mb-48"></div>
+                    
+                    <div class="relative grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                        <div class="order-2 lg:order-1">
+                            <span class="inline-block px-4 py-1.5 bg-blue-500/10 text-blue-400 rounded-xl text-xs font-black uppercase tracking-widest mb-6 border border-blue-500/20">
+                                Our Journey
+                            </span>
+                            <h2 class="text-4xl md:text-5xl font-black text-white tracking-tight mb-8 leading-tight">
+                                Redefining Trust in <span class="text-blue-400">Service Evaluation</span>
+                            </h2>
+                            <p class="text-slate-400 text-lg leading-relaxed mb-10 font-medium">
+                                At <span class="text-white font-bold">Rateify</span>, we believe that every voice matters and every service has a story. Our mission is to bridge the gap between service providers and customers through a platform built on transparency, authenticity, and excellence.
+                            </p>
+                            
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-10">
+                                <div class="flex items-start space-x-4">
+                                    <div class="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center shrink-0 border border-white/10">
+                                        <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.154-2.048-.442-3.04z" />
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-white font-bold mb-1">Authentic Reviews</h4>
+                                        <p class="text-slate-500 text-sm">Every review is verified for transparency.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start space-x-4">
+                                    <div class="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center shrink-0 border border-white/10">
+                                        <svg class="w-6 h-6 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-white font-bold mb-1">Growth Focused</h4>
+                                        <p class="text-slate-500 text-sm">Helping businesses evolve through feedback.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-wrap gap-4">
+                                <a href="{{ route('register') }}" class="px-8 py-4 bg-blue-600 text-white rounded-2xl font-black hover:bg-blue-500 hover:scale-105 transition-all duration-300 shadow-xl shadow-blue-900/20">
+                                    Join the Community
+                                </a>
+                                <a href="#" class="px-8 py-4 bg-white/5 text-white rounded-2xl font-black border border-white/10 hover:bg-white/10 transition-all duration-300">
+                                    Learn More
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="order-1 lg:order-2 relative">
+                            <div class="absolute inset-0 bg-blue-500/20 blur-[100px] rounded-full scale-75"></div>
+                            <div class="relative bg-white/5 backdrop-blur-2xl border border-white/10 rounded-[2.5rem] p-4 lg:p-8 transform hover:-rotate-2 transition-transform duration-500">
+                                <img src="{{ asset('images/our_story.png') }}" alt="Rateify Story" class="rounded-[2rem] w-full shadow-2xl">
+                                
+                                <!-- Floating Badge -->
+                                <div class="absolute -bottom-6 -right-6 md:-right-12 bg-white rounded-[1.5rem] p-6 shadow-2xl border border-slate-100 hidden md:block animate-bounce-slow">
+                                    <div class="flex items-center space-x-4">
+                                        <div class="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center text-white font-black text-xl">
+                                            R
+                                        </div>
+                                        <div>
+                                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">Market Standard</p>
+                                            <p class="text-slate-900 font-bold">100% Authentic</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <style>
+                @keyframes bounce-slow {
+                    0%, 100% { transform: translateY(0); }
+                    50% { transform: translateY(-20px); }
+                }
+                .animate-bounce-slow {
+                    animation: bounce-slow 6s ease-in-out infinite;
+                }
+            </style>
+
+            {{-- About Us Section --}}
+            <div class="mt-24 mb-16">
+                <div class="text-center mb-16">
+                    <span class="inline-block px-4 py-1.5 bg-blue-50 text-blue-600 rounded-xl text-xs font-black uppercase tracking-widest mb-4">
+                        Quality & Excellence
+                    </span>
+                    <h2 class="text-3xl md:text-5xl font-black text-slate-900 tracking-tight">
+                        The Pillars of <span class="text-blue-600">Rateify</span>
+                    </h2>
+                    <p class="mt-4 text-slate-500 font-medium max-w-2xl mx-auto">
+                        We are committed to building a platform where quality is recognized and excellence is the standard.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="group bg-white rounded-[2.5rem] p-10 border border-slate-100 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500">
+                        <div class="w-20 h-20 mb-8 rounded-3xl bg-blue-50 flex items-center justify-center group-hover:scale-110 transition-transform duration-500 overflow-hidden">
+                            <img src="{{ asset('images/pillars_icons.png') }}" class="w-[300%] max-w-none transform -translate-x-[0%]" alt="Innovation">
+                        </div>
+                        <h3 class="text-2xl font-black text-slate-900 mb-4 group-hover:text-blue-600 transition-colors">Innovation</h3>
+                        <p class="text-slate-500 leading-relaxed font-medium">
+                            Leveraging advanced technology to provide real-time, actionable insights for both customers and providers.
+                        </p>
+                    </div>
+
+                    <div class="group bg-white rounded-[2.5rem] p-10 border border-slate-100 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500">
+                        <div class="w-20 h-20 mb-8 rounded-3xl bg-amber-50 flex items-center justify-center group-hover:scale-110 transition-transform duration-500 overflow-hidden">
+                            <img src="{{ asset('images/pillars_icons.png') }}" class="w-[300%] max-w-none transform -translate-x-[33.33%]" alt="Integrity">
+                        </div>
+                        <h3 class="text-2xl font-black text-slate-900 mb-4 group-hover:text-amber-600 transition-colors">Integrity</h3>
+                        <p class="text-slate-500 leading-relaxed font-medium">
+                            Ensuring every review is authentic and every business is represented fairly and transparently.
+                        </p>
+                    </div>
+
+                    <div class="group bg-white rounded-[2.5rem] p-10 border border-slate-100 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500">
+                        <div class="w-20 h-20 mb-8 rounded-3xl bg-indigo-50 flex items-center justify-center group-hover:scale-110 transition-transform duration-500 overflow-hidden">
+                            <img src="{{ asset('images/pillars_icons.png') }}" class="w-[300%] max-w-none transform -translate-x-[66.66%]" alt="Impact">
+                        </div>
+                        <h3 class="text-2xl font-black text-slate-900 mb-4 group-hover:text-indigo-600 transition-colors">Impact</h3>
+                        <p class="text-slate-500 leading-relaxed font-medium">
+                            Driving meaningful growth by bridging the gap between customer expectations and service delivery.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
             {{-- Recent Reviews Section --}}
             @if(isset($recentReviews) && $recentReviews->count() > 0)
                 <div class="mt-24 mb-16">
@@ -275,6 +458,161 @@
                     </div>
                 </div>
             @endif
+
+            {{-- Partners Section --}}
+            @if(isset($partners) && $partners->count() > 0)
+                <div class="mt-24 mb-16">
+                    <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+                        <div>
+                            <span class="inline-block px-4 py-1.5 bg-blue-50 text-blue-600 rounded-xl text-xs font-black uppercase tracking-widest mb-4">
+                                Our Partners
+                            </span>
+                            <h2 class="text-3xl md:text-4xl font-black text-slate-900 tracking-tight">
+                                Trusted by <span class="text-blue-600">Leading</span> Companies
+                            </h2>
+                        </div>
+                    </div>
+
+                    <div x-data="{ 
+                        atBeginning: true,
+                        atEnd: false,
+                        next() {
+                            this.$refs.carousel.scrollBy({ left: 300, behavior: 'smooth' })
+                        },
+                        prev() {
+                            this.$refs.carousel.scrollBy({ left: -300, behavior: 'smooth' })
+                        },
+                        update() {
+                            this.atBeginning = this.$refs.carousel.scrollLeft <= 0
+                            this.atEnd = this.$refs.carousel.scrollLeft + this.$refs.carousel.clientWidth >= this.$refs.carousel.scrollWidth - 10
+                        }
+                    }" x-init="update()" class="relative">
+                        
+                        <div 
+                            x-ref="carousel"
+                            @scroll.debounce.5ms="update()"
+                            class="flex overflow-x-auto snap-x snap-mandatory hide-scrollbar space-x-8 pb-8"
+                            style="scrollbar-width: none; -ms-overflow-style: none;"
+                        >
+                            <style>
+                                .hide-scrollbar::-webkit-scrollbar { display: none; }
+                            </style>
+                            @foreach($partners as $partner)
+                                <div class="snap-start shrink-0 w-[280px]">
+                                    <div class="group bg-white rounded-[2rem] p-8 border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col items-center justify-center h-full">
+                                        <div class="w-full aspect-square flex items-center justify-center mb-6 bg-slate-50 rounded-2xl overflow-hidden group-hover:bg-blue-50 transition-colors">
+                                            @if($partner->logo)
+                                                <img src="{{ asset('storage/' . $partner->logo) }}" alt="{{ $partner->name }}" class="max-w-[80%] max-h-[80%] object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300">
+                                            @else
+                                                <div class="text-slate-300">
+                                                    <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                                                    </svg>
+                                                </div>
+                                            @endif
+                                        </div>
+                                        <h3 class="text-lg font-black text-slate-900 text-center group-hover:text-blue-600 transition-colors">
+                                            {{ $partner->name }}
+                                        </h3>
+                                        @if($partner->url)
+                                            <a href="{{ $partner->url }}" target="_blank" class="mt-4 text-xs font-bold text-blue-600 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
+                                                Visit Website →
+                                            </a>
+                                        @endif
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+
+                        <!-- Carousel Controls -->
+                        @if($partners->count() > 1)
+                            <div class="absolute -top-20 right-0 flex space-x-4">
+                                <button @click="prev()" 
+                                        :class="atBeginning ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-600 hover:text-white'"
+                                        class="p-4 bg-white border border-slate-100 rounded-2xl text-slate-900 shadow-sm transition-all">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                                    </svg>
+                                </button>
+                                <button @click="next()" 
+                                        :class="atEnd ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-600 hover:text-white'"
+                                        class="p-4 bg-white border border-slate-100 rounded-2xl text-slate-900 shadow-sm transition-all">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                    </svg>
+                                </button>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            @endif
+
+            {{-- Contact Us Section --}}
+            <div class="mt-32 mb-16">
+                <div class="bg-white rounded-[3rem] p-8 md:p-16 border border-slate-100 shadow-xl overflow-hidden relative">
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-blue-50 rounded-full -mr-32 -mt-32 blur-3xl"></div>
+                    
+                    <div class="relative grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                        <div>
+                            <span class="inline-block px-4 py-1.5 bg-blue-50 text-blue-600 rounded-xl text-xs font-black uppercase tracking-widest mb-6">
+                                Get In Touch
+                            </span>
+                            <h2 class="text-4xl font-black text-slate-900 tracking-tight mb-8">
+                                Ready to Elevate Your <br><span class="text-blue-600">Service Experience?</span>
+                            </h2>
+                            <p class="text-slate-500 text-lg mb-10 font-medium">
+                                Have questions or want to partner with us? Our team is here to help you navigate your journey with Rateify.
+                            </p>
+                            
+                            <div class="space-y-6">
+                                <div class="flex items-center space-x-4 group p-4 rounded-2xl hover:bg-slate-50 transition-colors">
+                                    <div class="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center text-white shrink-0 shadow-lg shadow-blue-200 group-hover:scale-110 transition-transform">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">Email Support</p>
+                                        <p class="text-slate-900 font-bold">hello@rateify.io</p>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center space-x-4 group p-4 rounded-2xl hover:bg-slate-50 transition-colors">
+                                    <div class="w-12 h-12 bg-indigo-600 rounded-xl flex items-center justify-center text-white shrink-0 shadow-lg shadow-indigo-200 group-hover:scale-110 transition-transform">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">Our Location</p>
+                                        <p class="text-slate-900 font-bold">Lagos, Nigeria</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-50 rounded-[2rem] p-8 md:p-12 relative overflow-hidden group">
+                            <div class="absolute inset-0 bg-blue-600 opacity-0 group-hover:opacity-5 transition-opacity duration-500"></div>
+                            <h3 class="text-2xl font-black text-slate-900 mb-8">Quick Message</h3>
+                            <form class="space-y-6">
+                                <div>
+                                    <input type="text" placeholder="Your Name" class="w-full px-6 py-4 bg-white border border-slate-100 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-600/20 focus:border-blue-600 transition-all font-medium">
+                                </div>
+                                <div>
+                                    <input type="email" placeholder="Email Address" class="w-full px-6 py-4 bg-white border border-slate-100 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-600/20 focus:border-blue-600 transition-all font-medium">
+                                </div>
+                                <div>
+                                    <textarea rows="4" placeholder="How can we help?" class="w-full px-6 py-4 bg-white border border-slate-100 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-600/20 focus:border-blue-600 transition-all font-medium"></textarea>
+                                </div>
+                                <button type="button" class="w-full py-4 bg-slate-900 text-white rounded-2xl font-black hover:bg-blue-600 hover:scale-[1.02] transition-all shadow-xl shadow-slate-900/10">
+                                    Send Message
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </x-app-layout>

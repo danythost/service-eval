@@ -16,7 +16,9 @@ class ServiceController extends Controller
         $featuredServices = Service::latest()->take(5)->get();
         $services = Service::latest()->paginate(12);
         $recentReviews = \App\Models\Review::with('service')->approved()->latest()->take(6)->get();
-        return view('services.index', compact('services', 'featuredServices', 'recentReviews'));
+        $partners = \App\Models\Partner::latest()->get();
+        $topProviders = \App\Models\User::where('role', 'provider')->withCount('services')->take(5)->get();
+        return view('services.index', compact('services', 'featuredServices', 'recentReviews', 'partners', 'topProviders'));
     }
 
     /**
