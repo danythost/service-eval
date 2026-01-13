@@ -165,7 +165,7 @@
         @endif
     </div>
 
-    <div class="py-12">
+    <div class="py-12" x-data="{ activeCategory: 'All' }">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             {{-- Top Providers Section --}}
             @if(isset($topProviders) && $topProviders->count() > 0)
@@ -216,9 +216,44 @@
                 </div>
             @endif
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {{-- Category Pills --}}
+            <div class="mb-12">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
+                    <div>
+                        <h2 class="text-3xl font-black text-slate-900 tracking-tight">
+                            Explore <span class="text-blue-600">Available Services</span>
+                        </h2>
+                        <p class="text-slate-500 font-medium mt-1">Find the best providers for your needs.</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center space-x-3 overflow-x-auto pb-4 scrollbar-hide">
+                    <button 
+                        @click="activeCategory = 'All'"
+                        :class="activeCategory === 'All' ? 'bg-blue-600 text-white shadow-lg shadow-blue-200' : 'bg-white text-slate-600 border-slate-100 hover:border-blue-200 hover:bg-blue-50'"
+                        class="px-6 py-2.5 rounded-2xl text-xs font-black uppercase tracking-widest border transition-all shrink-0">
+                        All Services
+                    </button>
+                    @foreach($categories as $category)
+                        <button 
+                            @click="activeCategory = '{{ $category }}'"
+                            :class="activeCategory === '{{ $category }}' ? 'bg-blue-600 text-white shadow-lg shadow-blue-200' : 'bg-white text-slate-600 border-slate-100 hover:border-blue-200 hover:bg-blue-50'"
+                            class="px-6 py-2.5 rounded-2xl text-xs font-black uppercase tracking-widest border transition-all shrink-0">
+                            {{ $category }}
+                        </button>
+                    @endforeach
+                </div>
+            </div>
+
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4" x-show="true">
                 @forelse($services as $service)
-                    <div class="bg-white rounded-lg shadow border border-gray-100 overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-200 flex flex-col h-full">
+                    <div 
+                        x-show="activeCategory === 'All' || activeCategory === '{{ $service->category }}'"
+                        x-transition:enter="transition ease-out duration-300"
+                        x-transition:enter-start="opacity-0 transform scale-95"
+                        x-transition:enter-end="opacity-100 transform scale-100"
+                        class="bg-white rounded-lg shadow border border-gray-100 overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-200 flex flex-col h-full">
                         <div class="aspect-video w-full bg-gray-50 overflow-hidden border-b border-gray-50">
                             @if($service->primary_image)
                                 <img src="{{ asset('storage/' . $service->primary_image) }}" alt="{{ $service->name }}" class="w-full h-full object-cover">
